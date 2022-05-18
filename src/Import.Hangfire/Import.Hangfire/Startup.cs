@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Import.Hangfire.Interfaces;
 
 namespace Import.Hangfire
 {
@@ -58,6 +59,8 @@ namespace Import.Hangfire
             });
 
             app.UseHangfireDashboard();
+
+            RecurringJob.AddOrUpdate<IHangfireJobsService>("Importar informações dos sensores de nível.", x => x.ImportarDados(), Cron.Never());
         }
     }
 }
